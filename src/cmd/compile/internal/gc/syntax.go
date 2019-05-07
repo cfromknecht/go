@@ -705,6 +705,7 @@ const (
 	OXCASE    // case List: Nbody (select case before processing; List==nil means default)
 	OCONTINUE // continue [Sym]
 	ODEFER    // defer Left (Left must be call)
+	OTIDY     // tidy Left (Left must be call)
 	OEMPTY    // no-op (empty statement)
 	OFALL     // fallthrough
 	OFOR      // for Ninit; Left; Right { Nbody }

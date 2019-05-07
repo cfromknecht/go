@@ -622,6 +622,12 @@ type (
 		Call  *CallExpr
 	}
 
+	// A TidyStmt node represents a tidy statement.
+	TidyStmt struct {
+		Tidy token.Pos // position of "tidy" keyword
+		Call *CallExpr
+	}
+
 	// A ReturnStmt node represents a return statement.
 	ReturnStmt struct {
 		Return  token.Pos // position of "return" keyword
@@ -723,6 +729,7 @@ func (s *IncDecStmt) Pos() token.Pos     { return s.X.Pos() }
 func (s *AssignStmt) Pos() token.Pos     { return s.Lhs[0].Pos() }
 func (s *GoStmt) Pos() token.Pos         { return s.Go }
 func (s *DeferStmt) Pos() token.Pos      { return s.Defer }
+func (s *TidyStmt) Pos() token.Pos       { return s.Tidy }
 func (s *ReturnStmt) Pos() token.Pos     { return s.Return }
 func (s *BranchStmt) Pos() token.Pos     { return s.TokPos }
 func (s *BlockStmt) Pos() token.Pos      { return s.Lbrace }
@@ -752,6 +759,7 @@ func (s *IncDecStmt) End() token.Pos {
 func (s *AssignStmt) End() token.Pos { return s.Rhs[len(s.Rhs)-1].End() }
 func (s *GoStmt) End() token.Pos     { return s.Call.End() }
 func (s *DeferStmt) End() token.Pos  { return s.Call.End() }
+func (s *TidyStmt) End() token.Pos   { return s.Call.End() }
 func (s *ReturnStmt) End() token.Pos {
 	if n := len(s.Results); n > 0 {
 		return s.Results[n-1].End()
@@ -802,6 +810,7 @@ func (*IncDecStmt) stmtNode()     {}
 func (*AssignStmt) stmtNode()     {}
 func (*GoStmt) stmtNode()         {}
 func (*DeferStmt) stmtNode()      {}
+func (*TidyStmt) stmtNode()       {}
 func (*ReturnStmt) stmtNode()     {}
 func (*BranchStmt) stmtNode()     {}
 func (*BlockStmt) stmtNode()      {}

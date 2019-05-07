@@ -805,6 +805,8 @@ func (s *state) stmt(n *Node) {
 		}
 	case ODEFER:
 		s.call(n.Left, callDefer)
+	case OTIDY:
+		s.curfn.Func.Exit.Prepend(n.Left)
 	case OGO:
 		s.call(n.Left, callGo)
 

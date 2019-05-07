@@ -259,6 +259,7 @@ const stopset uint64 = 1<<_Break |
 	1<<_Const |
 	1<<_Continue |
 	1<<_Defer |
+	1<<_Tidy |
 	1<<_Fallthrough |
 	1<<_For |
 	1<<_Go |
@@ -756,7 +757,7 @@ func (p *parser) callStmt() *CallStmt {
 
 	s := new(CallStmt)
 	s.pos = p.pos()
-	s.Tok = p.tok // _Defer or _Go
+	s.Tok = p.tok // _Defer, _Tidy, or _Go
 	p.next()
 
 	x := p.pexpr(p.tok == _Lparen) // keep_parens so we can report error below
@@ -2022,7 +2023,7 @@ func (p *parser) commClause() *CommClause {
 // 	Declaration | LabeledStmt | SimpleStmt |
 // 	GoStmt | ReturnStmt | BreakStmt | ContinueStmt | GotoStmt |
 // 	FallthroughStmt | Block | IfStmt | SwitchStmt | SelectStmt | ForStmt |
-// 	DeferStmt .
+// 	DeferStmt | TidyStmt .
 func (p *parser) stmtOrNil() Stmt {
 	if trace {
 		defer p.trace("stmt " + p.tok.String())()
@@ -2091,7 +2092,7 @@ func (p *parser) stmtOrNil() Stmt {
 		}
 		return s
 
-	case _Go, _Defer:
+	case _Go, _Defer, _Tidy:
 		return p.callStmt()
 
 	case _Goto:

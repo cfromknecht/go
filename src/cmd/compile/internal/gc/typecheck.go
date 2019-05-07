@@ -2110,7 +2110,7 @@ func typecheck1(n *Node, top int) (res *Node) {
 			checkdefergo(n)
 		}
 
-	case OGO:
+	case OGO, OTIDY:
 		ok |= ctxStmt
 		n.Left = typecheck(n.Left, ctxStmt|ctxExpr)
 		checkdefergo(n)
@@ -2297,9 +2297,14 @@ func checksliceconst(lo *Node, hi *Node) bool {
 }
 
 func checkdefergo(n *Node) {
-	what := "defer"
-	if n.Op == OGO {
+	var what string
+	switch n.Op {
+	case ODEFER:
+		what = "defer"
+	case OGO:
 		what = "go"
+	case OTIDY:
+		what = "tidy"
 	}
 
 	switch n.Left.Op {

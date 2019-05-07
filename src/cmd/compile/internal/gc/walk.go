@@ -219,7 +219,7 @@ func walkstmt(n *Node) *Node {
 	case ODEFER:
 		Curfn.Func.SetHasDefer(true)
 		fallthrough
-	case OGO:
+	case OGO, OTIDY:
 		switch n.Left.Op {
 		case OPRINT, OPRINTN:
 			n.Left = wrapCall(n.Left, &n.Ninit)

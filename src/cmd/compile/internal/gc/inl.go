@@ -379,6 +379,7 @@ func (v *hairyVisitor) visit(n *Node) bool {
 		OTYPESW,
 		OGO,
 		ODEFER,
+		OTIDY,
 		ODCLTYPE, // can't print yet
 		OBREAK,
 		ORETJMP:
@@ -552,7 +553,7 @@ func inlnode(n *Node, maxCost int32) *Node {
 
 	switch n.Op {
 	// inhibit inlining of their argument
-	case ODEFER, OGO:
+	case ODEFER, OGO, OTIDY:
 		switch n.Left.Op {
 		case OCALLFUNC, OCALLMETH:
 			n.Left.SetNoInline(true)

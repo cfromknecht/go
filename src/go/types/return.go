@@ -21,7 +21,7 @@ func (check *Checker) isTerminating(s ast.Stmt, label string) bool {
 
 	case *ast.BadStmt, *ast.DeclStmt, *ast.EmptyStmt, *ast.SendStmt,
 		*ast.IncDecStmt, *ast.AssignStmt, *ast.GoStmt, *ast.DeferStmt,
-		*ast.RangeStmt:
+		*ast.TidyStmt, *ast.RangeStmt:
 		// no chance
 
 	case *ast.LabeledStmt:
@@ -114,7 +114,7 @@ func hasBreak(s ast.Stmt, label string, implicit bool) bool {
 
 	case *ast.BadStmt, *ast.DeclStmt, *ast.EmptyStmt, *ast.ExprStmt,
 		*ast.SendStmt, *ast.IncDecStmt, *ast.AssignStmt, *ast.GoStmt,
-		*ast.DeferStmt, *ast.ReturnStmt:
+		*ast.DeferStmt, *ast.TidyStmt, *ast.ReturnStmt:
 		// no chance
 
 	case *ast.LabeledStmt:

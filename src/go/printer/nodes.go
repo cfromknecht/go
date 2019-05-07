@@ -1226,6 +1226,10 @@ func (p *printer) stmt(stmt ast.Stmt, nextIsRBrace bool) {
 		p.print(token.DEFER, blank)
 		p.expr(s.Call)
 
+	case *ast.TidyStmt:
+		p.print(token.TIDY, blank)
+		p.expr(s.Call)
+
 	case *ast.ReturnStmt:
 		p.print(token.RETURN)
 		if s.Results != nil {

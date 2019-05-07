@@ -426,6 +426,9 @@ func (check *Checker) stmt(ctxt stmtContext, s ast.Stmt) {
 	case *ast.DeferStmt:
 		check.suspendedCall("defer", s.Call)
 
+	case *ast.TidyStmt:
+		check.suspendedCall("tidy", s.Call)
+
 	case *ast.ReturnStmt:
 		res := check.sig.results
 		if res.Len() > 0 {

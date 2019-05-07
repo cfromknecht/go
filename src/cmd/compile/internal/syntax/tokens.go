@@ -47,6 +47,7 @@ const (
 	_Continue    // continue
 	_Default     // default
 	_Defer       // defer
+	_Tidy        // tidy
 	_Else        // else
 	_Fallthrough // fallthrough
 	_For         // for
@@ -80,6 +81,7 @@ const (
 	// for CallStmt
 	Go    = _Go
 	Defer = _Defer
+	Tidy  = _Tidy
 )
 
 // Make sure we have at most 64 tokens so we can use them in a set.

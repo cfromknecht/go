@@ -481,6 +481,7 @@ var stmtStart = map[token.Token]bool{
 	token.CONST:       true,
 	token.CONTINUE:    true,
 	token.DEFER:       true,
+	token.TIDY:        true,
 	token.FALLTHROUGH: true,
 	token.FOR:         true,
 	token.GO:          true,
@@ -1775,6 +1776,21 @@ func (p *parser) parseDeferStmt() ast.Stmt {
 	return &ast.DeferStmt{Defer: pos, Call: call}
 }
 
+func (p *parser) parseTidyStmt() ast.Stmt {
+	if p.trace {
+		defer un(trace(p, "TidyStmt"))
+	}
+
+	pos := p.expect(token.TIDY)
+	call := p.parseCallExpr("tidy")
+	p.expectSemi()
+	if call == nil {
+		return &ast.BadStmt{From: pos, To: pos + 4} // len("tidy")
+	}
+
+	return &ast.TidyStmt{Tidy: pos, Call: call}
+}
+
 func (p *parser) parseReturnStmt() *ast.ReturnStmt {
 	if p.trace {
 		defer un(trace(p, "ReturnStmt"))
@@ -2226,6 +2242,8 @@ func (p *parser) parseStmt() (s ast.Stmt) {
 		s = p.parseGoStmt()
 	case token.DEFER:
 		s = p.parseDeferStmt()
+	case token.TIDY:
+		s = p.parseTidyStmt()
 	case token.RETURN:
 		s = p.parseReturnStmt()
 	case token.BREAK, token.CONTINUE, token.GOTO, token.FALLTHROUGH:

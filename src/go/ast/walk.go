@@ -212,6 +212,9 @@ func Walk(v Visitor, node Node) {
 	case *DeferStmt:
 		Walk(v, n.Call)
 
+	case *TidyStmt:
+		Walk(v, n.Call)
+
 	case *ReturnStmt:
 		walkExprList(v, n.Results)
 

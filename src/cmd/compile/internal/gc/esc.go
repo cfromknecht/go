@@ -1293,7 +1293,7 @@ func (e *EscState) escassign(dst, src *Node, step *EscStep) {
 	case OCONV,
 		OCONVNOP,
 		ODOTMETH,
-		// treat recv.meth as a value with recv in it, only happens in ODEFER and OGO
+		// treat recv.meth as a value with recv in it, only happens in ODEFER, OTIDY and OGO
 		// iface.method already leaks iface in esccall, no need to put in extra ODOTINTER edge here
 		OSLICE,
 		OSLICE3,

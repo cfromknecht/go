@@ -99,6 +99,7 @@ const (
 
 	DEFAULT
 	DEFER
+	TIDY
 	ELSE
 	FALLTHROUGH
 	FOR
@@ -200,6 +201,7 @@ var tokens = [...]string{
 
 	DEFAULT:     "default",
 	DEFER:       "defer",
+	TIDY:        "tidy",
 	ELSE:        "else",
 	FALLTHROUGH: "fallthrough",
 	FOR:         "for",

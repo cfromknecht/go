@@ -164,6 +164,7 @@ var goopnames = []string{
 	OCOPY:     "copy",
 	ODELETE:   "delete",
 	ODEFER:    "defer",
+	OTIDY:     "tidy",
 	ODIV:      "/",
 	OEQ:       "==",
 	OFALL:     "fallthrough",
@@ -952,6 +953,9 @@ func (n *Node) stmtfmt(s fmt.State, mode fmtMode) {
 	case ODEFER:
 		mode.Fprintf(s, "defer %v", n.Left)
 
+	case OTIDY:
+		mode.Fprintf(s, "tidy %v", n.Left)
+
 	case OIF:
 		if simpleinit {
 			mode.Fprintf(s, "if %v; %v { %v }", n.Ninit.First(), n.Left, n.Nbody)
@@ -1169,6 +1173,7 @@ var opprec = []int{
 	ODCL:        -1,
 	ODCLFIELD:   -1,
 	ODEFER:      -1,
+	OTIDY:       -1,
 	OEMPTY:      -1,
 	OFALL:       -1,
 	OFOR:        -1,
